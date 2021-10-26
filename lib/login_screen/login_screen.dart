@@ -4,6 +4,7 @@ import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
 import 'package:email_auth/components/logo_section.dart';
+import 'package:email_auth/frogot_password_screen/frogot_password_screen.dart';
 import 'package:email_auth/home_screen/home_screen.dart';
 import 'package:email_auth/register_screen/register_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
@@ -86,8 +87,40 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 5.0),
                         const CustomTextField(Obsecure: true),
 
-                        SizedBox(height: 15),
+                        SizedBox(height: 10.0),
 
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: "Frogot Your Password.. ",
+                                    style: TextStyle(
+                                      color: kGrey,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "Reset Password",
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        utilFunction.navigateTo(
+                                            context, FrogotPasswordScreen());
+                                      },
+                                    style: const TextStyle(
+                                      color: kBlack,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
                         //SignIn button
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
