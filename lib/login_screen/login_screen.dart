@@ -1,9 +1,15 @@
+import 'package:email_auth/components/custom_button.dart';
+import 'package:email_auth/components/custom_text.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
 import 'package:email_auth/components/logo_section.dart';
+import 'package:email_auth/home_screen/home_screen.dart';
+import 'package:email_auth/register_screen/register_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:email_auth/utils/constants.dart';
+import 'package:email_auth/utils/util_functions.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,
-                vertical: 160,
+                vertical: 120,
               ),
               child: Column(
                 children: [
@@ -81,41 +87,47 @@ class _LoginScreenState extends State<LoginScreen> {
                         const CustomTextField(Obsecure: true),
 
                         SizedBox(height: 15),
+
+                        //SignIn button
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Sign In",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: kWhite,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      primaryColor,
-                                      Colors.white,
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: kBlack,
-                                      offset: Offset(0.0, 1.0), //(x,y)
-                                      blurRadius: 6.0,
+                            CustomButton(
+                              btnText: "Sign In",
+                              ontap: () {
+                                utilFunction.navigateTo(context, HomeScreen());
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: "Don't have an Account..",
+                                    style: TextStyle(
+                                      color: kGrey,
+                                      fontSize: 14.0,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  TextSpan(
+                                    text: "Register",
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        utilFunction.navigateTo(
+                                            context, RegisterScreen());
+                                      },
+                                    style: const TextStyle(
+                                      color: kBlack,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
