@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 vertical: 120,
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const LogoSection(),
                   const HeddingText(

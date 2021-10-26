@@ -60,6 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 vertical: 60,
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const LogoSection(),
                   const HeddingText(
