@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
+    this.Obsecure = false,
   }) : super(key: key);
-
+  final bool Obsecure;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50.0,
       child: TextField(
+        obscureText: Obsecure,
         decoration: InputDecoration(
           filled: true,
           fillColor: kWhite,

@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,
-                vertical: 150,
+                vertical: 160,
               ),
               child: Column(
                 children: [
@@ -72,11 +72,54 @@ class _LoginScreenState extends State<LoginScreen> {
                         const LableText(lable: "Enter Your Email"),
                         const SizedBox(height: 5.0),
                         const CustomTextField(),
+
                         SizedBox(height: 10),
+
                         //Input Password
                         const LableText(lable: "Enter Your Password"),
                         const SizedBox(height: 5.0),
-                        const CustomTextField(),
+                        const CustomTextField(Obsecure: true),
+
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Sign In",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: kWhite,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomLeft,
+                                    colors: [
+                                      primaryColor,
+                                      Colors.white,
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: kBlack,
+                                      offset: Offset(0.0, 1.0), //(x,y)
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   )
