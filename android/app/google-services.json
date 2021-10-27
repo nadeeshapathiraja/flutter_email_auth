@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542662354297",
+    "project_id": "test-auth-7702c",
+    "storage_bucket": "test-auth-7702c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542662354297:android:d7d28f0fc694f2a5a1fba8",
+        "android_client_info": {
+          "package_name": "com.example.email_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542662354297-4bvvemeo91oe66nar2akp6kvpohcgfao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSUu4LM82YygX2hbGsHrjh9yNoJRKndfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542662354297-4bvvemeo91oe66nar2akp6kvpohcgfao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

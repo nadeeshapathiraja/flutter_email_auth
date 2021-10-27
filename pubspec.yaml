@@ -38,6 +38,9 @@ dependencies:
   animate_do: ^2.0.0
   email_validator: ^2.0.1
 
+  #Firebase Connect
+  firebase_core: "^1.7.0"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
