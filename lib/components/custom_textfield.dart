@@ -1,12 +1,18 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+  CustomTextField({
     Key? key,
     this.Obsecure = false,
+    required this.controller,
   }) : super(key: key);
+
   final bool Obsecure;
+  var controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -14,6 +20,7 @@ class CustomTextField extends StatelessWidget {
       height: 50.0,
       child: TextField(
         obscureText: Obsecure,
+        controller: controller,
         decoration: InputDecoration(
           filled: true,
           fillColor: kWhite,

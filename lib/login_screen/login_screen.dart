@@ -13,6 +13,7 @@ import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -81,16 +84,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           //Input Email
                           const LableText(lable: "Enter Your Email"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(),
+                          CustomTextField(
+                            controller: _email,
+                          ),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           //Input Password
                           const LableText(lable: "Enter Your Password"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(Obsecure: true),
+                          CustomTextField(
+                            Obsecure: true,
+                            controller: _password,
+                          ),
 
-                          SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

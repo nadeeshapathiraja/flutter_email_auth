@@ -10,6 +10,7 @@ import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 class FrogotPasswordScreen extends StatefulWidget {
   const FrogotPasswordScreen({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class FrogotPasswordScreen extends StatefulWidget {
 }
 
 class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
+  final _email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -78,7 +80,9 @@ class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
                           //Input Email
                           const LableText(lable: "Enter Your Email"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(),
+                          CustomTextField(
+                            controller: _email,
+                          ),
 
                           SizedBox(height: 25),
                           //SignIn button
@@ -105,5 +109,13 @@ class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
         ),
       ),
     );
+  }
+
+  bool inputValidation() {
+    var isValid = false;
+    if (_email.text.isEmpty) {
+      isValid = false;
+    }
+    return isValid;
   }
 }

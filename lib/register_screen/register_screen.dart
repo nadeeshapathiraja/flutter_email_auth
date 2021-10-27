@@ -11,6 +11,7 @@ import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -20,6 +21,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _name = TextEditingController();
+  final _phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -79,26 +84,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           //Input Name
                           const LableText(lable: "Enter Your Name"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(),
+                          CustomTextField(
+                            controller: _name,
+                          ),
                           const SizedBox(height: 10),
 
                           //Input Phone
                           const LableText(lable: "Enter Your Phone Number"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(),
+                          CustomTextField(
+                            controller: _phone,
+                          ),
                           const SizedBox(height: 10),
 
                           //Input Email
                           const LableText(lable: "Enter Your Email"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(),
+                          CustomTextField(
+                            controller: _email,
+                          ),
                           const SizedBox(height: 10),
 
                           //Input Password
                           const LableText(lable: "Enter Your Password"),
                           const SizedBox(height: 5.0),
-                          const CustomTextField(Obsecure: true),
-                          SizedBox(height: 15.0),
+                          CustomTextField(
+                            Obsecure: true,
+                            controller: _password,
+                          ),
+                          const SizedBox(height: 15.0),
 
                           //SignIn button
                           Row(
@@ -106,7 +120,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             children: [
                               CustomButton(
                                 btnText: "Sign Up",
-                                ontap: () {},
+                                ontap: () {
+                                  if (inputValidation()) {
+                                    print("Success");
+                                  } else {
+                                    print("Error");
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -153,5 +173,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  bool inputValidation() {
+    var isValid = false;
+    if (_email.text.isEmpty ||
+        _password.text.isEmpty ||
+        _name.text.isEmpty ||
+        _phone.text.isEmpty) {
+      isValid = false;
+    } else if (!EmailValidator.validate(_email.text)) {
+      isValid = false;
+    } else if (_phone.text.length != 10) {
+      isValid = false;
+    } else {
+      isValid = true;
+    }
+    return isValid;
   }
 }
