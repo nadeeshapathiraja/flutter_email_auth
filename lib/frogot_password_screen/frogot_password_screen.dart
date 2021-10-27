@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:email_auth/components/custom_button.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
@@ -34,67 +35,70 @@ class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          child: ClipRRect(
-            //borderRadius: BorderRadius.circular(20.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.greenAccent,
-                    Colors.white,
+          child: SlideInLeft(
+            child: ClipRRect(
+              //borderRadius: BorderRadius.circular(20.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Colors.greenAccent,
+                      Colors.white,
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: kBlack,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 6.0,
+                    ),
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: kBlack,
-                    offset: Offset(0.0, 1.0), //(x,y)
-                    blurRadius: 6.0,
-                  ),
-                ],
-              ),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 160,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const LogoSection(),
-                  const HeddingText(
-                    text: "Frogot Your Password",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        //Input Email
-                        const LableText(lable: "Enter Your Email"),
-                        const SizedBox(height: 5.0),
-                        const CustomTextField(),
-
-                        SizedBox(height: 25),
-                        //SignIn button
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomButton(
-                              btnText: "Send Email",
-                              ontap: () {
-                                utilFunction.navigateTo(context, LoginScreen());
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 160,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const LogoSection(),
+                    const HeddingText(
+                      text: "Frogot Your Password",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          //Input Email
+                          const LableText(lable: "Enter Your Email"),
+                          const SizedBox(height: 5.0),
+                          const CustomTextField(),
+
+                          SizedBox(height: 25),
+                          //SignIn button
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomButton(
+                                btnText: "Send Email",
+                                ontap: () {
+                                  utilFunction.navigateTo(
+                                      context, LoginScreen());
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
