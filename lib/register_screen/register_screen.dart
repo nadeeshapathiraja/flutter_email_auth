@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_single_cascade_in_expression_statements
+
 import 'package:animate_do/animate_do.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:email_auth/components/custom_button.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
@@ -9,6 +12,7 @@ import 'package:email_auth/login_screen/login_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -25,6 +29,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _password = TextEditingController();
   final _name = TextEditingController();
   final _phone = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -120,11 +127,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             children: [
                               CustomButton(
                                 btnText: "Sign Up",
-                                ontap: () {
+                                ontap: () async {
                                   if (inputValidation()) {
-                                    print("Success");
+                                    try {
+                                      UserCredential userCredential =
+                                          await FirebaseAuth.instance
+                                              .createUserWithEmailAndPassword(
+                                        email: _email.text,
+                                        password: _password.text,
+                                      );
+                                      AwesomeDialog(
+                                        context: context,
+                                        dialogType: DialogType.SUCCES,
+                                        animType: AnimType.BOTTOMSLIDE,
+                                        title: 'Your Registration Success',
+                                        desc:
+                                            'Dialog description here.............',
+                                        btnOkOnPress: () {
+                                          utilFunction.navigateTo(
+                                              context, LoginScreen());
+                                        },
+                                      ).show();
+                                    } on FirebaseAuthException catch (e) {
+                                      if (e.code == 'weak-password') {
+                                        print("Bitch");
+                                        AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.ERROR,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title:
+                                              'The password provided is too weak.',
+                                          desc:
+                                              'Dialog description here.............',
+                                          btnOkOnPress: () {},
+                                        ).show();
+                                      } else if (e.code ==
+                                          'email-already-in-use') {
+                                        AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.ERROR,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title:
+                                              'The account already exists for that email.',
+                                          desc:
+                                              'Dialog description here.............',
+                                          btnOkOnPress: () {},
+                                        ).show();
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
                                   } else {
-                                    print("Error");
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.ERROR,
+                                      animType: AnimType.BOTTOMSLIDE,
+                                      title:
+                                          'Please Fill All fields and Check your Email',
+                                      desc:
+                                          'Dialog description here.............',
+                                      btnOkOnPress: () {},
+                                    ).show();
                                   }
                                 },
                               ),
