@@ -129,9 +129,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   if (inputValidation()) {
                                     await AuthController().registerUser(
                                       context,
-                                      _name.text,
                                       _email.text,
                                       _password.text,
+                                      _name.text,
                                       _phone.text,
                                     );
                                   } else {
