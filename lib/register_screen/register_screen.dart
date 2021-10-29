@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:email_auth/components/custom_button.dart';
+import 'package:email_auth/components/custom_dialogbox.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
@@ -136,58 +137,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         email: _email.text,
                                         password: _password.text,
                                       );
-                                      AwesomeDialog(
-                                        context: context,
-                                        dialogType: DialogType.SUCCES,
-                                        animType: AnimType.BOTTOMSLIDE,
-                                        title: 'Your Registration Success',
-                                        desc:
-                                            'Dialog description here.............',
-                                        btnOkOnPress: () {
+                                      DialogBox().dialogbox(
+                                        context,
+                                        "Your Registration Success",
+                                        'Dialog description here.............',
+                                        DialogType.SUCCES,
+                                        () {
                                           utilFunction.navigateTo(
-                                              context, LoginScreen());
+                                            context,
+                                            const LoginScreen(),
+                                          );
                                         },
-                                      ).show();
+                                      );
                                     } on FirebaseAuthException catch (e) {
                                       if (e.code == 'weak-password') {
-                                        print("Bitch");
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.ERROR,
-                                          animType: AnimType.BOTTOMSLIDE,
-                                          title:
-                                              'The password provided is too weak.',
-                                          desc:
-                                              'Dialog description here.............',
-                                          btnOkOnPress: () {},
-                                        ).show();
+                                        DialogBox().dialogbox(
+                                          context,
+                                          'The password provided is too weak.',
+                                          'Dialog description here.............',
+                                          DialogType.ERROR,
+                                          () {
+                                            setState(() {
+                                              _password.text = '';
+                                            });
+                                          },
+                                        );
                                       } else if (e.code ==
                                           'email-already-in-use') {
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.ERROR,
-                                          animType: AnimType.BOTTOMSLIDE,
-                                          title:
-                                              'The account already exists for that email.',
-                                          desc:
-                                              'Dialog description here.............',
-                                          btnOkOnPress: () {},
-                                        ).show();
+                                        DialogBox().dialogbox(
+                                          context,
+                                          'The account already exists for that email.',
+                                          'Dialog description here.............',
+                                          DialogType.ERROR,
+                                          () {
+                                            setState(() {
+                                              _email.text = '';
+                                            });
+                                          },
+                                        );
                                       }
                                     } catch (e) {
                                       print(e);
                                     }
                                   } else {
-                                    AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.ERROR,
-                                      animType: AnimType.BOTTOMSLIDE,
-                                      title:
-                                          'Please Fill All fields and Check your Email',
-                                      desc:
-                                          'Dialog description here.............',
-                                      btnOkOnPress: () {},
-                                    ).show();
+                                    DialogBox().dialogbox(
+                                      context,
+                                      'Please Fill All fields and Check your Email',
+                                      'Dialog description here.............',
+                                      DialogType.ERROR,
+                                      () {},
+                                    );
                                   }
                                 },
                               ),
