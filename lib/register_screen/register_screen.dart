@@ -128,7 +128,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ontap: () async {
                                   if (inputValidation()) {
                                     await AuthController().registerUser(
-                                        context, _email.text, _password.text);
+                                      context,
+                                      _name.text,
+                                      _email.text,
+                                      _password.text,
+                                      _phone.text,
+                                    );
                                   } else {
                                     DialogBox().dialogbox(
                                       context,

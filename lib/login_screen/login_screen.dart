@@ -1,16 +1,20 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:email_auth/components/custom_button.dart';
+import 'package:email_auth/components/custom_dialogbox.dart';
 import 'package:email_auth/components/custom_text.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
 import 'package:email_auth/components/logo_section.dart';
+import 'package:email_auth/controllers/auth_controller.dart';
 import 'package:email_auth/frogot_password_screen/frogot_password_screen.dart';
 import 'package:email_auth/home_screen/home_screen.dart';
 import 'package:email_auth/register_screen/register_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -25,6 +29,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _email = TextEditingController();
   final _password = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -117,8 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       text: "Reset Password",
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          utilFunction.navigateTo(
-                                              context, FrogotPasswordScreen());
+                                          utilFunction.navigateTo(context,
+                                              const FrogotPasswordScreen());
                                         },
                                       style: const TextStyle(
                                         color: kBlack,
@@ -131,21 +138,31 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           //SignIn button
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomButton(
                                 btnText: "Sign In",
-                                ontap: () {
-                                  utilFunction.navigateTo(
-                                      context, HomeScreen());
+                                ontap: () async {
+                                  if (inputValidation()) {
+                                    await AuthController().loginUser(
+                                        context, _email.text, _password.text);
+                                  } else {
+                                    DialogBox().dialogbox(
+                                      context,
+                                      'Please Fill All fields and Check your Email',
+                                      'Dialog description here.............',
+                                      DialogType.ERROR,
+                                      () {},
+                                    );
+                                  }
                                 },
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -164,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           utilFunction.navigateTo(
-                                              context, RegisterScreen());
+                                              context, const RegisterScreen());
                                         },
                                       style: const TextStyle(
                                         color: kBlack,
@@ -188,5 +205,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  bool inputValidation() {
+    var isValid = false;
+    if (_email.text.isEmpty || _password.text.isEmpty) {
+      isValid = false;
+    } else if (!EmailValidator.validate(_email.text)) {
+      isValid = false;
+    } else {
+      isValid = true;
+    }
+    return isValid;
   }
 }

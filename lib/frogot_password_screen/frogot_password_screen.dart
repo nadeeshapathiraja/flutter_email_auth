@@ -1,9 +1,12 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:email_auth/components/custom_button.dart';
+import 'package:email_auth/components/custom_dialogbox.dart';
 import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
 import 'package:email_auth/components/logo_section.dart';
+import 'package:email_auth/controllers/auth_controller.dart';
 import 'package:email_auth/login_screen/login_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:email_auth/utils/constants.dart';
@@ -92,8 +95,18 @@ class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
                               CustomButton(
                                 btnText: "Send Email",
                                 ontap: () {
-                                  utilFunction.navigateTo(
-                                      context, LoginScreen());
+                                  if (inputValidation()) {
+                                    AuthController().sendPasswordResetEmail(
+                                        context, _email.text);
+                                  } else {
+                                    DialogBox().dialogbox(
+                                      context,
+                                      'Please Enter your Email',
+                                      'Dialog description here.............',
+                                      DialogType.ERROR,
+                                      () {},
+                                    );
+                                  }
                                 },
                               ),
                             ],
@@ -115,6 +128,8 @@ class _FrogotPasswordScreenState extends State<FrogotPasswordScreen> {
     var isValid = false;
     if (_email.text.isEmpty) {
       isValid = false;
+    } else {
+      isValid = true;
     }
     return isValid;
   }
