@@ -8,12 +8,11 @@ import 'package:email_auth/components/custom_textfield.dart';
 import 'package:email_auth/components/heding_text.dart';
 import 'package:email_auth/components/lable_text.dart';
 import 'package:email_auth/components/logo_section.dart';
-import 'package:email_auth/home_screen/home_screen.dart';
+import 'package:email_auth/controllers/auth_controller.dart';
 import 'package:email_auth/login_screen/login_screen.dart';
 import 'package:email_auth/utils/app_colors.dart';
 import 'package:email_auth/utils/constants.dart';
 import 'package:email_auth/utils/util_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -30,8 +29,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _password = TextEditingController();
   final _name = TextEditingController();
   final _phone = TextEditingController();
-
-  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -130,55 +127,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 btnText: "Sign Up",
                                 ontap: () async {
                                   if (inputValidation()) {
-                                    try {
-                                      UserCredential userCredential =
-                                          await FirebaseAuth.instance
-                                              .createUserWithEmailAndPassword(
-                                        email: _email.text,
-                                        password: _password.text,
-                                      );
-                                      DialogBox().dialogbox(
-                                        context,
-                                        "Your Registration Success",
-                                        'Dialog description here.............',
-                                        DialogType.SUCCES,
-                                        () {
-                                          utilFunction.navigateTo(
-                                            context,
-                                            const LoginScreen(),
-                                          );
-                                        },
-                                      );
-                                    } on FirebaseAuthException catch (e) {
-                                      if (e.code == 'weak-password') {
-                                        DialogBox().dialogbox(
-                                          context,
-                                          'The password provided is too weak.',
-                                          'Dialog description here.............',
-                                          DialogType.ERROR,
-                                          () {
-                                            setState(() {
-                                              _password.text = '';
-                                            });
-                                          },
-                                        );
-                                      } else if (e.code ==
-                                          'email-already-in-use') {
-                                        DialogBox().dialogbox(
-                                          context,
-                                          'The account already exists for that email.',
-                                          'Dialog description here.............',
-                                          DialogType.ERROR,
-                                          () {
-                                            setState(() {
-                                              _email.text = '';
-                                            });
-                                          },
-                                        );
-                                      }
-                                    } catch (e) {
-                                      print(e);
-                                    }
+                                    await AuthController().registerUser(
+                                        context, _email.text, _password.text);
                                   } else {
                                     DialogBox().dialogbox(
                                       context,
